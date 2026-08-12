@@ -49,7 +49,7 @@ donosi i dodatni trošak poput registra slika i orkestratora.
 ## Usklađenost s ciljevima projekta
 
 Za produkcijsko i testno okruženje slike kontejnera su iste — razlikuje
-se samo konfiguracija koja dolazi iz okoline. HTTP točka `/config`
+se samo konfiguracija koja dolazi iz okoline. HTTP endpoint `/config`
 pregledniku vraća `apiBaseUrl`, preko kojeg preglednik dalje šalje
 zahtjeve API-ju. Svaki servis je zasebna slika, čime dobivamo manju
 površinu napada i jednostavniji uvid u sigurnost pojedinih servisa.
