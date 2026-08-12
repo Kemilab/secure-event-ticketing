@@ -4,7 +4,7 @@ Ovaj repozitorij je referentni uzorak aplikacije za kolegij **Uvod u DevOps - De
 
 ## Arhitektura
 
-Detaljan pregled dostupan je na [architecture.md](architecture.md)
+Detaljan pregled dostupan je na [architecture.md](docs/architecture.md)
 
 - `frontend` - web UI za pregled evenata i kupnju karata
 - `api` - REST API za evente, narudzbe i health provjere
