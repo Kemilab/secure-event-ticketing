@@ -20,13 +20,13 @@ Preduvjet: Docker i Docker Compose
 
 ` cp .env.example .env`
 
-Za **testno** okruženje nije potrebnno mijenjati varijable
+Za **testno** okruženje nije potrebno mijenjati varijable
 
 ### Pokretanje servisa
 
 ` docker compose up -d --build`
 
-Frontend slika i kontejner optimizirana je za **HotReload**
+Frontend slika i kontejner optimizirani su za **HotReload**
 
 ### Testiranje aplikacije
 
@@ -65,7 +65,7 @@ docker compose logs -f
 
 ### Zaustavljanje
 
-Postgress kontjejner ima trajni volumen u kojem se nalaze sve narudže. Ukoliko je potrebno kratkovremeno zastaviti projekt bez gubitna podataka:
+Postgress kontejner ima trajni volumen u kojemu se nalaze sve narudže. Ukoliko je potrebno kratkovremeno zastaviti projekt bez gubitna podataka:
 
 - ` docker compose down`
 
