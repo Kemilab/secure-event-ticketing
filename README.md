@@ -18,19 +18,19 @@ Preduvjet: Docker i Docker Compose
 
 ### Postavljanje varijabli
 
-` cp .env.example .env`
+`cp .env.example .env`
 
 Za **testno** okruženje nije potrebno mijenjati varijable
 
 ### Pokretanje servisa
 
-` docker compose up -d --build`
+`docker compose up -d --build`
 
 Slike i kontejneri optimizirani su za **HotReload**
 
 ### Testiranje aplikacije
 
-Frontend URI: ` http://localhost:3000`
+Frontend URI: `http://localhost:3000`
 
 Api URI: `http://localhost:8080`
 
@@ -74,13 +74,13 @@ docker compose logs -f
 
 ### Zaustavljanje
 
-Postgress kontejner ima trajni volumen u kojemu se nalaze sve narudže. Ukoliko je potrebno kratkovremeno zastaviti projekt bez gubitna podataka:
+Postgres kontejner ima trajni volumen u kojemu se nalaze sve narudžbe. Ukoliko je potrebno privremeno zastaviti projekt bez gubitka podataka:
 
-- ` docker compose down`
+- `docker compose down`
 
 Za potpuno brisanje svih podataka i volumena:
 
-- ` docker compose down -v`
+- `docker compose down -v`
 
 ## Sigurnosni elementi
 
@@ -92,4 +92,4 @@ Za potpuno brisanje svih podataka i volumena:
 - NetworkPolicy segmentacija
 - Trivy skeniranje slika u CI pipelineu
 
-Detalji skeniranja: `docs/security/image-scan-report.md`
+Detalji skeniranja: `docs/security/image_scan_reports.md`
