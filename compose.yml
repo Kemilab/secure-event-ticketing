@@ -1,7 +1,6 @@
 services:
   postgres:
     image: postgres:16-alpine
-    container_name: ticketing-postgres
     env_file: .env
     volumes:
       - pgdata:/var/lib/postgresql/data
@@ -15,7 +14,6 @@ services:
 
   redis:
     image: redis:7-alpine
-    container_name: ticketing-redis
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
       interval: 5s
@@ -28,7 +26,6 @@ services:
       context: ./api
       target: dev
     image: ticketing-api:dev
-    container_name: ticketing-api
     env_file: .env
     ports:
       - "${API_PORT:-8080}:8080"
@@ -46,7 +43,6 @@ services:
       context: ./worker
       target: dev
     image: ticketing-worker:dev
-    container_name: ticketing-worker
     env_file: .env
     volumes:
       - ./worker/src:/app/src
@@ -62,7 +58,6 @@ services:
       context: ./frontend
       target: dev
     image: ticketing-frontend:dev
-    container_name: ticketing-frontend
     env_file: .env
     ports:
       - "${FRONTEND_PORT:-3000}:3000"

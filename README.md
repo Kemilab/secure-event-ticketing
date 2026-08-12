@@ -10,7 +10,7 @@ Detaljan pregled dostupan je na [architecture.md](docs/architecture.md)
 - `api` - REST API za evente, narudzbe i health provjere
 - `worker` - pozadinska obrada queue poruka
 - `postgres` - trajna pohrana narudzbi
-- `redis` - queue/cache sloj
+- `redis` - red (queue)
 
 ## Podizanje testnoga okruženja
 
@@ -26,7 +26,7 @@ Za **testno** okruženje nije potrebno mijenjati varijable
 
 ` docker compose up -d --build`
 
-Frontend slika i kontejner optimizirani su za **HotReload**
+Slike i kontejneri optimizirani su za **HotReload**
 
 ### Testiranje aplikacije
 
@@ -37,23 +37,32 @@ Api URI: `http://localhost:8080`
 ### Brza validacija funkcionalnosti
 
 1. Health API:
+
    ```bash
    curl http://localhost:8080/healthz
    curl http://localhost:8080/readyz
    ```
 2. Dohvati evente:
+
    ```bash
    curl http://localhost:8080/events
    ```
 3. Pošalji narudzbu:
+
    ```bash
    curl -X POST http://localhost:8080/tickets/purchase \
      -H "Content-Type: application/json" \
      -d '{"eventId":"evt-1001","customerEmail":"student@example.com","quantity":2}'
    ```
 4. Provjeri obradene narudžbe:
+
    ```bash
    curl http://localhost:8080/tickets/orders
+   ```
+5. Testiranje skaliranja
+
+   ```
+   docker compose up -d --scale worker=4
    ```
 
 ### Praćenje statusa servisa
