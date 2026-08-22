@@ -1,0 +1,36 @@
+on:
+    push:
+        branches:
+            - main
+    pull_request:
+
+jobs:
+    build:
+        name: Build
+        runs-on: ubuntu-24.04
+        strategy:
+            fail-fast: false
+            matrix:
+                service: [api, frontend, worker]
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+            - name: Build a image from Dockerfile
+              run: docker build --target prod -t ticketing-${{matrix.service}}:sha-${{github.sha}} ./${{matrix.service}}
+            - name: Trivy report
+              uses: aquasecurity/trivy-action@v0.36.0
+              with:
+                  image-ref: "ticketing-${{matrix.service}}:sha-${{github.sha}}"
+                  format: "table"
+                  exit-code: "0"
+                  severity: "CRITICAL,HIGH,MEDIUM"
+            - name: Trivy gate
+              uses: aquasecurity/trivy-action@v0.36.0
+              with:
+                  image-ref: "ticketing-${{matrix.service}}:sha-${{github.sha}}"
+                  format: "table"
+                  exit-code: "1"
+                  ignore-unfixed: true
+                  vuln-type: "os,library"
+                  severity: "CRITICAL"
