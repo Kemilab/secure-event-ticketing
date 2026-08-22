@@ -1,0 +1,61 @@
+on:
+    push:
+        branches:
+            - main
+    pull_request:
+    release:
+        types: [published]
+
+jobs:
+    scan_build:
+        name: Skeniraj i spremi na GHCR
+        runs-on: ubuntu-24.04
+        strategy:
+            fail-fast: false
+            matrix:
+                service: [api, frontend, worker]
+        permissions:
+            contents: read
+            packages: write
+
+        steps:
+            - name: Preuzmi kod
+              uses: actions/checkout@v4
+
+            - name: Bildaj iz Dockerfile
+              run: docker build --target prod -t ticketing-${{matrix.service}}:sha-${{github.sha}} ./${{matrix.service}}
+
+            - name: Trivy analiza
+              uses: aquasecurity/trivy-action@v0.36.0
+              with:
+                  image-ref: "ticketing-${{matrix.service}}:sha-${{github.sha}}"
+                  format: "table"
+                  exit-code: "0"
+                  severity: "CRITICAL,HIGH,MEDIUM"
+
+            - name: Trivy gate
+              uses: aquasecurity/trivy-action@v0.36.0
+              with:
+                  image-ref: "ticketing-${{matrix.service}}:sha-${{github.sha}}"
+                  format: "table"
+                  exit-code: "1"
+                  ignore-unfixed: true
+                  vuln-type: "os,library"
+                  severity: "CRITICAL"
+
+            - name: Login na GHCR
+              uses: docker/login-action@v3
+              if: github.event_name == 'release'
+              with:
+                  registry: ghcr.io
+                  username: ${{github.actor}}
+                  password: ${{secrets.GITHUB_TOKEN}}
+
+            - name: Objavi sliku
+              if: github.event_name == 'release'
+              run: |
+                  IMG=ghcr.io/kemilab/ticketing-${{matrix.service}}
+                  docker tag ticketing-${{matrix.service}}:sha-${{github.sha}} $IMG:${{github.event.release.tag_name}}
+                  docker tag ticketing-${{matrix.service}}:sha-${{github.sha}} $IMG:sha-${{github.sha}}
+                  docker push $IMG:${{github.event.release.tag_name}}
+                  docker push $IMG:sha-${{github.sha}}
