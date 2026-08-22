@@ -7,8 +7,8 @@ on:
         types: [published]
 
 jobs:
-    scan_build:
-        name: Skeniraj i spremi na GHCR
+    build:
+        name: Validacija i pripravljanje slika
         runs-on: ubuntu-24.04
         strategy:
             fail-fast: false
