@@ -37,7 +37,7 @@ docker run --rm \
 Isto za `ticketing-frontend:1.0.0` i `ticketing-worker:1.0.0`.
 
 Socket Docker daemona potreban je da bi Trivy vidio lokalno sagrađene slike.
-Volumen `trivy-cache` trajno pohranjuje bazu ranjivosti — prvo skeniranje je
+Volumen `trivy-cache` trajno pohranjuje bazu ranjivosti, prvo skeniranje je
 dosta sporije jer je mora preuzeti u cijelosti.
 
 ## Rezultati
@@ -83,7 +83,7 @@ paketa mu nisu potrebni.
 **Validacija.** Ponovljeni sken: 0 CRITICAL. Pipeline zelen, slika uspješno
 objavljena. Veličina slike smanjena za **10 MB**.
 
-**Napomena.** Mjera uz uklanjanje ranjivosti smanjuje i površinu napada — u
+**Napomena.** Mjera uz uklanjanje ranjivosti smanjuje i površinu napada, u
 produkcijskoj slici više nema alata za instalaciju paketa, pa ih ne može
 iskoristiti ni netko tko dobije pristup kontejneru.
 
@@ -106,7 +106,7 @@ Pipeline razdvaja **izvještavanje** od **blokiranja**:
 
 Prag za blokiranje namjerno je postavljen na CRITICAL uz `--ignore-unfixed`.
 Gate na razini HIGH obarao bi build i zbog ranjivosti za koje zakrpa ne
-postoji — a gate koji se pali bez mogućnosti rješavanja problema u praksi
+postoji, a gate koji se pali bez mogućnosti rješavanja problema u praksi
 završi tako da ga se isključi. Zato se prijavljuje sve, a blokira samo ono
 kritično što je moguće popraviti.
 
@@ -123,7 +123,7 @@ izvješće o šteti.
 | `v<semver>` | samo pri GitHub releaseu | verzija čitljiva ljudima |
 
 Objava se događa **isključivo na `release` događaj**, i to iza quality gatea.
-Push u `main` i pull requestovi pokreću build i skeniranje, ali ne i objavu —
+Push u `main` i pull requestovi pokreću build i skeniranje, ali ne i objavu,
 time registar ostaje čist, a objava je svjesna odluka umjesto nusprodukta
 svakog commita.
 
