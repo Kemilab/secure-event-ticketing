@@ -1,3 +1,4 @@
 node_modules/
 .env
 docs/PROJEKT-BILJESKE.md
+k8s/02-secrets.yml
