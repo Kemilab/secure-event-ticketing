@@ -29,6 +29,7 @@ spec:
       labels:
         app: api
     spec:
+      serviceAccountName: ticketing-service-account
       containers:
         - name: api
           image: ghcr.io/kemilab/ticketing-api:sha-1d48fad84563af43ffca61ab7277a9700e8020f5

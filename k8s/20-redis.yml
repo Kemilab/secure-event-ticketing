@@ -26,6 +26,7 @@ spec:
       labels:
         app: redis
     spec:
+      serviceAccountName: ticketing-service-account
       containers:
         - name: redis
           image: redis:7-alpine

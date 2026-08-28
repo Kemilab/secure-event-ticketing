@@ -29,6 +29,7 @@ spec:
       labels:
         app: frontend
     spec:
+      serviceAccountName: ticketing-service-account
       containers:
         - name: frontend
           image: ghcr.io/kemilab/ticketing-frontend:sha-1d48fad84563af43ffca61ab7277a9700e8020f5

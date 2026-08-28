@@ -29,6 +29,7 @@ spec:
       labels:
         app: postgres
     spec:
+      serviceAccountName: ticketing-service-account
       containers:
         - name: postgres
           image: postgres:16-alpine
