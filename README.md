@@ -1,3 +1,4 @@
+[![.github/workflows/publish.yml](https://github.com/Kemilab/secure-event-ticketing/actions/workflows/publish.yml/badge.svg)](https://github.com/Kemilab/secure-event-ticketing/actions/workflows/publish.yml)
 # Secure Event Ticketing Platform
 
 Ovaj repozitorij je referentni uzorak aplikacije za kolegij **Uvod u DevOps - DevSecOps**.
@@ -93,3 +94,10 @@ Za potpuno brisanje svih podataka i volumena:
 - Trivy skeniranje slika u CI pipelineu
 
 Detalji skeniranja: `docs/security/image_scan_reports.md`
+
+## Produkcijski deployment
+
+- [Upute za deployment](docs/k8s.md)
+- [Runbook](docs/runbook.md)
+- [CI/CD pipeline](docs/cicd.md)
+- [Sigurnosno izvješće](docs/security/image_scan_reports.md)

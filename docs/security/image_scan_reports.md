@@ -77,15 +77,8 @@ RUN rm -rf /usr/local/lib/node_modules/npm \
            /opt/yarn-v1.22.22 /usr/local/bin/yarn /usr/local/bin/yarnpkg
 ```
 
-Runtime izvršava isključivo `node src/server.js` i alati za instalaciju
+Runtime se izvršava isključivo `node src/server.js` i alati za instalaciju
 paketa mu nisu potrebni.
-
-**Validacija.** Ponovljeni sken: 0 CRITICAL. Pipeline zelen, slika uspješno
-objavljena. Veličina slike smanjena za **10 MB**.
-
-**Napomena.** Mjera uz uklanjanje ranjivosti smanjuje i površinu napada, u
-produkcijskoj slici više nema alata za instalaciju paketa, pa ih ne može
-iskoristiti ni netko tko dobije pristup kontejneru.
 
 ### Čisti rezultati
 
@@ -106,14 +99,11 @@ Pipeline razdvaja **izvještavanje** od **blokiranja**:
 
 Prag za blokiranje namjerno je postavljen na CRITICAL uz `--ignore-unfixed`.
 Gate na razini HIGH obarao bi build i zbog ranjivosti za koje zakrpa ne
-postoji, a gate koji se pali bez mogućnosti rješavanja problema u praksi
-završi tako da ga se isključi. Zato se prijavljuje sve, a blokira samo ono
-kritično što je moguće popraviti.
+postoji.
 
 Redoslijed koraka je bitan: build → skeniranje → gate → prijava u registar →
 objava. Padne li gate, koraci objave se ne izvršavaju i ranjiva slika nikad ne
-dođe do registra. Skeniranje nakon objave ne bi bilo quality gate nego
-izvješće o šteti.
+dođe do registra.
 
 ## Politika tagiranja i objave slika
 
@@ -123,10 +113,7 @@ izvješće o šteti.
 | `v<semver>` | samo pri GitHub releaseu | verzija čitljiva ljudima |
 
 Objava se događa **isključivo na `release` događaj**, i to iza quality gatea.
-Push u `main` i pull requestovi pokreću build i skeniranje, ali ne i objavu,
-time registar ostaje čist, a objava je svjesna odluka umjesto nusprodukta
-svakog commita.
-
+Push u `main` i pull requestovi pokreću build i skeniranje, ali ne i objavu.
 Tag `latest` se ne koristi za deployment. Pomičan je, pa iz njega nije moguće
 zaključiti koja verzija koda zapravo radi u okruženju niti se pouzdano vratiti
 na prethodnu. U deployment manifestima koristi se `sha-` tag.
@@ -134,20 +121,3 @@ na prethodnu. U deployment manifestima koristi se `sha-` tag.
 Registar je GitHub Container Registry (`ghcr.io/kemilab/`). Prijava u CI-ju
 ide ugrađenim `GITHUB_TOKEN`-om s dozvolom `packages: write`, bez dodatnih
 tajni u repozitoriju.
-
-## Prilozi
-
-- `scan-api-1.0.0.txt`
-- `scan-frontend-1.0.0.txt`
-- `scan-worker-1.0.0.txt`
-
-Ispisi se generiraju preusmjeravanjem izlaza:
-
-```bash
-docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \
-  -v trivy-cache:/root/.cache/ aquasec/trivy:0.74.0 \
-  image ticketing-api:1.0.0 > docs/security/scan-api-1.0.0.txt
-```
-
-Verzija slike upisana je u naziv datoteke jer Trivy datum skeniranja ne
-zapisuje u sam ispis.
